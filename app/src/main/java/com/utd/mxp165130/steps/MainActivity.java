@@ -26,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static Sensor mStepDetector;
     private int initialCount=0;
     private TextView counter;
+    private DataProcessing dataObject;
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -63,17 +64,16 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
+        //Read the data :
+        dataObject = new DataProcessing();
+        dataObject.readFromStepCounterDataFile(getBaseContext());
+        dataObject.readFromUserAccountDataFile(getBaseContext());
+
+        //Sensor
         mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
         mStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
         this.counter = (TextView) findViewById(R.id.textView8);
 
-//        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.recyclerView);
-//
-//        RecyclerViewAdapter rAdapter = new RecyclerViewAdapter();
-//        RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
-//        recyclerView.setLayoutManager(mLayoutManager);
-//        recyclerView.setItemAnimator(new DefaultItemAnimator());
-//        recyclerView.setAdapter(rAdapter);
 
     }
 
@@ -186,10 +186,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
                 return TabFragment1.newInstance();
             }
             else if(position == 1) {
-                return TabFragment2.newInstance();
+                return TabFragment2.newInstance(dataObject);
             }
             else  {
-                return TabFragment3.newInstance();
+                return TabFragment3.newInstance(dataObject);
             }
         }
         // getItem is called to instantiate the fragment for the given page.

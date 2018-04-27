@@ -14,7 +14,7 @@ import java.util.List;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
 
-    private ArrayList<StepCounterInstance> stepCounterInstancesList;
+    private ArrayList<StepCounterInstance> items;
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView StepCounterDate, StarTime, EndTime, noOfSteps, Distance;
@@ -31,7 +31,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
 
     public RecyclerViewAdapter(ArrayList<StepCounterInstance> stepCounterInstancesList) {
-        this.stepCounterInstancesList = stepCounterInstancesList;
+        this.items = stepCounterInstancesList;
     }
 
     @Override
@@ -53,6 +53,13 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public int getItemCount() {
-        return stepCounterInstancesList.size() ;
+        return items.size() ;
+    }
+
+    public void updateAdapterData(ArrayList<StepCounterInstance> items){
+        this.items.clear();
+        this.items.addAll(items);
+        this.notifyDataSetChanged();
     }
 }
+

@@ -10,4 +10,12 @@
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_history_items">HistoryItems</string>
     <string name="title_activity_summary">SummaryActivity</string>
+    <string-array name="DateFormats">
+        <item>mm/dd/yyyy hh:mm:ss</item>
+        <item>dd/mm/yyyy hh:mm:ss</item>
+        <item>dd/mm/yy hh:mm:ss</item>
+        <item>mm/dd/yy hh:mm:ss</item>
+        <item>yyyy/mm/dd hh:mm:ss</item>
+        <item>yy/mm/dd hh:mm:ss</item>
+    </string-array>
 </resources>

@@ -13,21 +13,25 @@ import com.utd.mxp165130.steps.R;
 
 public  class TabFragment2 extends Fragment {
 
-    public static TabFragment2 newInstance() {
+    private static String DATA_OBJECT = "dataObject";
+    private DataProcessing dataObject;
+
+    public static TabFragment2 newInstance(DataProcessing dataObject) {
         TabFragment2 fragment = new TabFragment2();
         Bundle args = new Bundle();
-        // args.putInt(ARG_SECTION_NUMBER, sectionNumber);
-        //fragment.setArguments(args);
+        args.putSerializable(DATA_OBJECT, dataObject);
+        fragment.setArguments(args);
         return fragment;
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        RecyclerView rv = new RecyclerView(getContext());
-        rv.setLayoutManager(new LinearLayoutManager(getContext()));
-        rv.setAdapter(new RecyclerViewAdapter());
-        return rv;
+        RecyclerView recyclerView = new RecyclerView(getContext());
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        dataObject = (DataProcessing) getArguments().getSerializable(DATA_OBJECT);
+        recyclerView.setAdapter(new RecyclerViewAdapter(dataObject.getStepCounterData()));
+        return recyclerView;
 
     }
 }

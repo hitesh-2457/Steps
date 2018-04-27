@@ -8,19 +8,198 @@
     tools:context=".TabFragment3">
 
     <!-- TODO: Update blank fragment layout -->
-    <TextView
-        android:id="@+id/textView2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/hello_blank_fragment" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/txtFirstName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Page 3"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="16dp"
+        android:fontFamily="sans-serif"
+        android:text="First Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        android:visibility="visible"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <EditText
+        android:id="@+id/editTextFirstName"
+        android:layout_width="225dp"
+        android:layout_height="45"
+        android:layout_marginStart="20dp"
+        android:ems="10"
+        android:inputType="textNoSuggestions|textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtFirstName"
+        tools:layout_editor_absoluteY="4dp"
+        tools:text="First Name" />
+
+    <TextView
+        android:id="@+id/txtLastName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Last Name"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtFirstName" />
+
+    <EditText
+        android:id="@+id/editTextLastName"
+        android:layout_width="225"
+        android:layout_height="45dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="textPersonName"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtLastName"
+        app:layout_constraintTop_toBottomOf="@+id/editTextFirstName"
+        tools:text="Last Name" />
+
+    <TextView
+        android:id="@+id/txtGender"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Gender"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtLastName" />
+
+    <EditText
+        android:id="@+id/editGender"
+        android:layout_width="225dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="text"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtGender"
+        app:layout_constraintTop_toBottomOf="@+id/editTextLastName"
+        tools:text="Gender" />
+
+    <TextView
+        android:id="@+id/txtAge"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Age"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtGender" />
+
+    <EditText
+        android:id="@+id/editAge"
+        android:layout_width="225dp"
+        android:layout_height="45dp"
+        android:layout_marginStart="76dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="number"
+        android:textSize="18sp"
+        app:layout_constraintStart_toEndOf="@+id/txtAge"
+        app:layout_constraintTop_toBottomOf="@+id/editGender"
+        tools:text="Age" />
+
+    <TextView
+        android:id="@+id/txtNoOfSteps"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Number of inches per step"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/editAge" />
+
+    <EditText
+        android:id="@+id/editTextNoOfSteps"
+        android:layout_width="110"
+        android:layout_height="45"
+        android:layout_marginStart="9dp"
+        android:layout_marginTop="16dp"
+        android:ems="10"
+        android:inputType="numberDecimal"
+        app:layout_constraintStart_toEndOf="@+id/txtNoOfSteps"
+        app:layout_constraintTop_toBottomOf="@+id/editAge" />
+
+    <TextView
+        android:id="@+id/txtUnits"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Units"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtNoOfSteps" />
+
+    <RadioGroup
+        android:id="@+id/unitsRadioGroup"
+        android:layout_width="224dp"
+        android:layout_height="72dp"
+        android:layout_marginStart="67dp"
+        android:layout_marginTop="9dp"
+        app:layout_constraintStart_toEndOf="@+id/txtUnits"
+        app:layout_constraintTop_toBottomOf="@+id/editTextNoOfSteps">
+
+        <RadioButton
+            android:id="@+id/metricSystem"
+            android:layout_width="145dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Metric System" />
+
+        <RadioButton
+            android:id="@+id/USStandardSystem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="US Standard System" />
+    </RadioGroup>
+
+    <TextView
+        android:id="@+id/txtDateFormat"
+        android:layout_width="108dp"
+        android:layout_height="26dp"
+        android:layout_marginStart="32dp"
+        android:layout_marginTop="35dp"
+        android:text="Date Format"
+        android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/txtUnits" />
+
+    <Spinner
+        android:id="@+id/DropDownDateFormat"
+        android:layout_width="218dp"
+        android:layout_height="47dp"
+        android:layout_marginStart="2dp"
+        android:layout_marginTop="8dp"
+        android:entries="@array/DateFormats"
+        app:layout_constraintStart_toEndOf="@+id/txtDateFormat"
+        app:layout_constraintTop_toBottomOf="@+id/unitsRadioGroup" />
+
+    <Button
+        android:id="@+id/BtnSave"
+        android:layout_width="121dp"
+        android:layout_height="50dp"
+        android:layout_marginStart="130dp"
+        android:layout_marginTop="15dp"
+        android:text="Save"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/DropDownDateFormat" />
+
 
 </android.support.constraint.ConstraintLayout>

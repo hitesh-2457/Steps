@@ -11,14 +11,15 @@ import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.stream.Stream;
 
 
-    /**
+/**
      * Utility class to process the data
      *
      */
 
-    public class DataProcessing implements Serializable {
+    public class DataProcessing extends ArrayList<StepCounterInstance> implements Serializable {
 
         private ArrayList<StepCounterInstance> stepCounterData = new ArrayList<>();
         private UserAccount userData = new UserAccount();
@@ -35,28 +36,35 @@ import java.util.ArrayList;
         }
 
 
-        public void setStepCounterData(String[] stepCounterDataStrings){
+        public StepCounterInstance setStepCounterInstance(String[] stepCounterDataStrings) {
 
+            StepCounterInstance object = new StepCounterInstance();
             try {
-                if(stepCounterDataStrings.length == 4) {
-                    StepCounterInstance object = new StepCounterInstance();
+                if (stepCounterDataStrings.length == 4) {
+
                     object.setStepCounterInstanceDate(stepCounterDataStrings[0]);
                     object.setStartTime(stepCounterDataStrings[1]);
                     object.setEndTime(stepCounterDataStrings[2]);
                     object.setNoOfSteps(stepCounterDataStrings[3]);
-                    stepCounterData.add(object);
                 }
-            }
-            catch (ParseException e) {
+            } catch (ParseException e) {
                 //do not add the instance to the list. Corrupt instance.
             }
-
+            return object;
         }
 
+    public void setStepCounterData(StepCounterInstance instance){
+           if(instance != null ){
+                stepCounterData.add(instance);
+           }
+    }
+
+    public void setStepCounterData(String[] stepCounterDataStrings){
+        setStepCounterData(setStepCounterInstance(stepCounterDataStrings));
+    }
 
         /**
          * Method to read data from a file and store it to a local data store
-         * @param context
          */
         public void readFromStepCounterDataFile(Context context){
 
@@ -105,12 +113,17 @@ import java.util.ArrayList;
                 userData.setGender(userDataStrings[2]);
                 userData.setAge(userDataStrings[3]);
                 userData.setInches_per_step(userDataStrings[4]);
-                userData.setMetric(userDataStrings[5]);
+                if(userDataStrings[5].equals("Metric System")){
+                    userData.setMetric("1");
+                }
+                else{
+                    userData.setMetric("2");
+                }
                 userData.setDateFormat(userDataStrings[6]);
             }
         }
 
-        public void readFromUSerAccountDataFile(Context context){
+        public void readFromUserAccountDataFile(Context context){
 
             try {
                 InputStream inputStream = context.openFileInput(User_DATA_FILENAME);
@@ -139,6 +152,11 @@ import java.util.ArrayList;
             }
 
         }
+
+    @Override
+    public Stream<StepCounterInstance> stream() {
+        return null;
     }
+}
 
 
