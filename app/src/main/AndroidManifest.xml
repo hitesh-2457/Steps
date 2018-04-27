@@ -22,6 +22,10 @@
         <activity
             android:name=".HistoryItems"
             android:label="@string/title_activity_history_items"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".SummaryActivity"
+            android:label="@string/title_activity_summary"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

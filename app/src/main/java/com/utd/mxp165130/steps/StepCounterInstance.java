@@ -60,8 +60,9 @@ public class StepCounterInstance {
 
     @Override
     public String toString() {
-        return ConvertDateToString(this.stepCounterInstanceDate) + "\t" + ConvertDateToString(this.startTime)
-                + "\t" + ConvertDateToString(this.endTime) + "\t" + this.noOfSteps;
+        String pattern = "dd-MM-yyyy HH:mm:ss";
+        return ConvertDateToString(this.stepCounterInstanceDate,pattern) + "\t" + ConvertDateToString(this.startTime,pattern)
+                + "\t" + ConvertDateToString(this.endTime,pattern) + "\t" + this.noOfSteps;
     }
 
 
@@ -70,8 +71,8 @@ public class StepCounterInstance {
         return format.parse(dateString);
     }
 
-    private String ConvertDateToString(Date date){
-        DateFormat format= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+    public String ConvertDateToString(Date date, String pattern){
+        DateFormat format= new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
