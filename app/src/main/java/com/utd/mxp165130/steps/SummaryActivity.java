@@ -8,6 +8,8 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
+
 public class SummaryActivity extends AppCompatActivity {
 
     @Override
@@ -31,7 +33,7 @@ public class SummaryActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.summaryEnd)).setText(dataObj.ConvertDateToString(dataObj.getEndTime(), pattern).split(" ")[1]);
 
         ((TextView) findViewById(R.id.summarySteps)).setText(dataObj.getNoOfSteps());
-        ((TextView) findViewById(R.id.summaryMiles)).setText(String.valueOf(dataObj.getDistance(userData.getMetric(), userData.getInches_per_step())));
+        ((TextView) findViewById(R.id.summaryMiles)).setText(new DecimalFormat("0.##").format(dataObj.getDistance(userData.getMetric(), userData.getInches_per_step())));
     }
 
     @Override
