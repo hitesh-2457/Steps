@@ -25,14 +25,17 @@ public  class TabFragment2 extends Fragment {
 
     private static String STEP_COUNTER_DATA = "stepCounterData";
     private static String USER = "user";
+    private static String DATA_OBJECT = "dataObject";
+    private DataProcessing dataObject;
     private ArrayList<StepCounterInstance> stepCounterData;
     private UserAccount user;
 
-    public static TabFragment2 newInstance(ArrayList<StepCounterInstance> stepCounterData, UserAccount user) {
+    public static TabFragment2 newInstance(ArrayList<StepCounterInstance> stepCounterData, UserAccount user,DataProcessing dataObject) {
         TabFragment2 fragment = new TabFragment2();
         Bundle args = new Bundle();
         args.putParcelableArrayList(STEP_COUNTER_DATA, stepCounterData);
         args.putParcelable(USER,user);
+        args.putParcelable(DATA_OBJECT, dataObject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -43,6 +46,7 @@ public  class TabFragment2 extends Fragment {
         //return rootView
         stepCounterData = getArguments().getParcelableArrayList(STEP_COUNTER_DATA);
         user = getArguments().getParcelable(USER);
+        dataObject = (DataProcessing) getArguments().getParcelable(DATA_OBJECT);
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         DividerItemDecoration itemDecor = new DividerItemDecoration(getContext(), VERTICAL);

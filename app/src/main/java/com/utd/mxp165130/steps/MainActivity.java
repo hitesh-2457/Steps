@@ -24,7 +24,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -197,9 +196,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             //store the data
             StepCounterInstance instance = new StepCounterInstance(currentDate,startTime,stopTime,initialCount);
-            if(instance!= null) {
-                dataObject.setStepCounterData(instance);
-            }
+            dataObject.setStepCounterData(instance);
             adapter.updateAdapterData(dataObject.getStepCounterData());
 
         }
@@ -261,7 +258,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (position == 0) {
                 return TabFragment1.newInstance();
             } else if (position == 1) {
-                return TabFragment2.newInstance(dataObject.getStepCounterData(),dataObject.getUserData());
+                return TabFragment2.newInstance(dataObject.getStepCounterData(),dataObject.getUserData(),dataObject);
             } else {
                 return TabFragment3.newInstance(dataObject);
             }
