@@ -21,7 +21,7 @@ public  class TabFragment2 extends Fragment {
     public static TabFragment2 newInstance(DataProcessing dataObject) {
         TabFragment2 fragment = new TabFragment2();
         Bundle args = new Bundle();
-        args.putSerializable(DATA_OBJECT, dataObject);
+        args.putParcelable(DATA_OBJECT, dataObject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -31,7 +31,7 @@ public  class TabFragment2 extends Fragment {
 
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
-        dataObject = (DataProcessing) getArguments().getSerializable(DATA_OBJECT);
+        dataObject = (DataProcessing) getArguments().getParcelable(DATA_OBJECT);
         ArrayList<StepCounterInstance> dataArray = dataObject.getStepCounterData();
         if(dataArray.size()!=0)
             recyclerView.setAdapter(new RecyclerViewAdapter(dataArray));

@@ -3,6 +3,8 @@ package com.utd.mxp165130.steps;
 
 import android.content.Context;
 import android.os.Environment;
+import android.os.Parcel;
+import android.os.Parcelable;
 
 import java.io.BufferedReader;
 import java.io.File;
@@ -21,7 +23,7 @@ import java.util.stream.Stream;
  * Utility class to process the data
  */
 
-public class DataProcessing extends ArrayList<StepCounterInstance> implements Serializable {
+public class DataProcessing extends ArrayList<StepCounterInstance> implements Parcelable {
 
     private ArrayList<StepCounterInstance> stepCounterData = new ArrayList<>();
     private UserAccount userData = new UserAccount();
@@ -169,6 +171,16 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Se
     @Override
     public Stream<StepCounterInstance> stream() {
         return null;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
 

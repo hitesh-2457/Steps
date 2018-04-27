@@ -23,7 +23,7 @@ public  class TabFragment3 extends Fragment {
     public static TabFragment3 newInstance(DataProcessing dataObject) {
         TabFragment3 fragment = new TabFragment3();
         Bundle args = new Bundle();
-        args.putSerializable(DATA_OBJECT, dataObject);
+        args.putParcelable(DATA_OBJECT, dataObject);
         fragment.setArguments(args);
         return fragment;
     }
@@ -32,7 +32,7 @@ public  class TabFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_tab_fragment3, container, false);
-        dataObject = (DataProcessing) getArguments().getSerializable(DATA_OBJECT);
+        dataObject = (DataProcessing) getArguments().getParcelable(DATA_OBJECT);
         populateFields(view);
         Button BtnSave = (Button) view.findViewById(R.id.BtnSave);
         BtnSave.setOnClickListener(new View.OnClickListener() {
@@ -43,9 +43,13 @@ public  class TabFragment3 extends Fragment {
                 EditText gender = (EditText) v.findViewById(R.id.editGender);
                 EditText age = (EditText) v.findViewById(R.id.editAge);
                 EditText noOfInchesPerStep = (EditText) v.findViewById(R.id.editTextNoOfSteps);
-                RadioGroup unitsGroup = (RadioGroup) v.findViewById(R.id.unitsRadioGroup);
-                int selectedRadioBtnId = unitsGroup.getCheckedRadioButtonId();
-                RadioButton selectedUnit = (RadioButton) v.findViewById(selectedRadioBtnId);
+                RadioGroup radioButtonGroup = (RadioGroup) v.findViewById(R.id.unitsRadioGroup);
+
+                int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();
+                View radioButton = radioButtonGroup.findViewById(radioButtonID);
+                int idx = radioButtonGroup.indexOfChild(radioButton);
+                RadioButton r = (RadioButton)  radioButtonGroup.getChildAt(idx);
+                String selectedtext = r.getText().toString();
                 Spinner dateFormat = (Spinner) v.findViewById(R.id.DropDownDateFormat);
                 String[] UserData = new String[7];
                 UserData[0] = fname.getText().toString();
@@ -53,7 +57,7 @@ public  class TabFragment3 extends Fragment {
                 UserData[2] = gender.getText().toString();
                 UserData[3] = age.getText().toString();
                 UserData[4] = noOfInchesPerStep.getText().toString();
-                UserData[5] = selectedUnit.getText().toString();
+                UserData[5] = selectedtext;
                 UserData[6] = dateFormat.getSelectedItem().toString();
                 dataObject.setUserData(UserData);
             }
@@ -78,7 +82,7 @@ public  class TabFragment3 extends Fragment {
             fname.setText(user.getFirstName());
             lname.setText(user.getLastName());
             gender.setText(user.getGender());
-            age.setText(user.getAge());
+            age.setText(String.valueOf(user.getAge()));
             noOfInchesPerStep.setText(String.valueOf(user.getInches_per_step()));
             if(user.getMetric() == 1) {
                 unitsGroup.check(R.id.metricSystem);
