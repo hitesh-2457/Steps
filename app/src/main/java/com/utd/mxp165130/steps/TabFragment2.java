@@ -11,6 +11,8 @@ import android.view.ViewGroup;
 
 import com.utd.mxp165130.steps.R;
 
+import java.util.ArrayList;
+
 public  class TabFragment2 extends Fragment {
 
     private static String DATA_OBJECT = "dataObject";
@@ -30,7 +32,9 @@ public  class TabFragment2 extends Fragment {
         RecyclerView recyclerView = new RecyclerView(getContext());
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
         dataObject = (DataProcessing) getArguments().getSerializable(DATA_OBJECT);
-        recyclerView.setAdapter(new RecyclerViewAdapter(dataObject.getStepCounterData()));
+        ArrayList<StepCounterInstance> dataArray = dataObject.getStepCounterData();
+        if(dataArray.size()!=0)
+            recyclerView.setAdapter(new RecyclerViewAdapter(dataArray));
         return recyclerView;
 
     }

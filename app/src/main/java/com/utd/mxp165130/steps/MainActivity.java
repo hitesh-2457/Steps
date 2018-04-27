@@ -1,11 +1,16 @@
 package com.utd.mxp165130.steps;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.TabLayout;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
@@ -24,7 +29,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     private static SensorManager mSensorManager;
     private static Sensor mStepDetector;
-    private int initialCount=0;
+    private int initialCount = 0;
     private TextView counter;
     private DataProcessing dataObject;
 
@@ -43,9 +48,27 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
      */
     private ViewPager mViewPager;
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
+        if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            requestPermissions(new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
+            super.onCreate(savedInstanceState);
+        } else {
+            super.onCreate(savedInstanceState);
+            loadActivity();
+        }
+        //Sensor
+        mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
+        mStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        loadActivity();
+    }
+
+    private void loadActivity() {
         setContentView(R.layout.activity_main);
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
@@ -69,12 +92,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         dataObject.readFromStepCounterDataFile(getBaseContext());
         dataObject.readFromUserAccountDataFile(getBaseContext());
 
-        //Sensor
-        mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
-        mStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+
         this.counter = (TextView) findViewById(R.id.textView8);
-
-
     }
 
     @Override
@@ -113,7 +132,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     @Override
     public void onSensorChanged(SensorEvent event) {
-        Log.i(TAG, "onSensorChanged: --------------------"+String.valueOf((int)event.values[0]));
+        Log.i(TAG, "onSensorChanged: --------------------" + String.valueOf((int) event.values[0]));
         this.initialCount += (int) event.values[0];
         counter.setText(String.valueOf(initialCount));
     }
@@ -123,8 +142,8 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void startRec(View v){
-        counter = ((View)v.getParent()).findViewById(R.id.textView8);
+    public void startRec(View v) {
+        counter = ((View) v.getParent()).findViewById(R.id.textView8);
         counter.setVisibility(View.VISIBLE);
         this.initialCount = 0;
         counter.setText("0");
@@ -166,8 +185,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 //    }
 
 
-
-
     /**
      * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
      * one of the sections/tabs/pages.
@@ -177,18 +194,17 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
+
         private static final String TAG = "MyActivity";
 
         @Override
         public Fragment getItem(int position) {
-            Log.i(TAG,"getItem: --------------------"+position+"--------------------");
-            if(position == 0){
+            Log.i(TAG, "getItem: --------------------" + position + "--------------------");
+            if (position == 0) {
                 return TabFragment1.newInstance();
-            }
-            else if(position == 1) {
+            } else if (position == 1) {
                 return TabFragment2.newInstance(dataObject);
-            }
-            else  {
+            } else {
                 return TabFragment3.newInstance(dataObject);
             }
         }

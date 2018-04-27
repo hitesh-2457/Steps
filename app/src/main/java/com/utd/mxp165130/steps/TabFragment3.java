@@ -32,8 +32,8 @@ public  class TabFragment3 extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_tab_fragment3, container, false);
-        populateFields(view);
         dataObject = (DataProcessing) getArguments().getSerializable(DATA_OBJECT);
+        populateFields(view);
         Button BtnSave = (Button) view.findViewById(R.id.BtnSave);
         BtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
