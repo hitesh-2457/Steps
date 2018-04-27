@@ -1,55 +1,58 @@
 package com.utd.mxp165130.steps;
 
+import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.MyViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
 
-    //private List<Movie> moviesList;
+    private ArrayList<StepCounterInstance> stepCounterInstancesList;
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
-        public TextView textView3, textView4, textView5, textView6, textView7;
+    public class HistoryViewHolder extends RecyclerView.ViewHolder {
+        public TextView StepCounterDate, StarTime, EndTime, noOfSteps, Distance;
 
-        public MyViewHolder(View view) {
+        public HistoryViewHolder(View view) {
             super(view);
-            textView3 = (TextView) view.findViewById(R.id.textView3);
-            textView4 = (TextView) view.findViewById(R.id.textView4);
-            textView5 = (TextView) view.findViewById(R.id.textView5);
-            textView6 = (TextView) view.findViewById(R.id.textView6);
-            textView7 = (TextView) view.findViewById(R.id.textView7);
+            StepCounterDate = (TextView) view.findViewById(R.id.textView3);
+            StarTime = (TextView) view.findViewById(R.id.textView4);
+            EndTime = (TextView) view.findViewById(R.id.textView5);
+            noOfSteps = (TextView) view.findViewById(R.id.textView6);
+            Distance = (TextView) view.findViewById(R.id.textView7);
         }
     }
 
 
-    public RecyclerViewAdapter() {
-
+    public RecyclerViewAdapter(ArrayList<StepCounterInstance> stepCounterInstancesList) {
+        this.stepCounterInstancesList = stepCounterInstancesList;
     }
 
     @Override
-    public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_row, parent, false);
 
-        return new MyViewHolder(itemView);
+        return new HistoryViewHolder(itemView);
     }
 
     @Override
-    public void onBindViewHolder(MyViewHolder holder, int position) {
-        //Movie movie = moviesList.get(position);
-        holder.textView3.setText("DATE");
-        holder.textView4.setText("Start Time");
-        holder.textView5.setText("End Time");
-        holder.textView6.setText("Steps");
-        holder.textView7.setText("Distance");
+    public void onBindViewHolder(HistoryViewHolder holder, int position) {
+        holder.StepCounterDate.setText("DATE");
+        holder.StarTime.setText("Start Time");
+        holder.EndTime.setText("End Time");
+        holder.noOfSteps.setText("Steps");
+        holder.Distance.setText("Distance");
     }
 
     @Override
     public int getItemCount() {
-        return 1;
+        return stepCounterInstancesList.size() ;
     }
 }

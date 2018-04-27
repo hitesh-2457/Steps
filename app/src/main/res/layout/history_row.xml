@@ -8,8 +8,8 @@
 
     <TextView
         android:id="@+id/textView3"
-        android:layout_width="wrap_content"
-        android:layout_height="15dp"
+        android:layout_width="60dp"
+        android:layout_height="26dp"
         android:layout_marginStart="33dp"
         android:text="TextView"
         app:layout_constraintStart_toStartOf="parent"
