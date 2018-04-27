@@ -1,6 +1,9 @@
 package com.utd.mxp165130.steps;
 
-public class UserAccount {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserAccount implements Parcelable {
 
     private String firstName;
     private String lastName;
@@ -70,6 +73,16 @@ public class UserAccount {
     public String toString() {
         return this.firstName +"\t"+ this.lastName +"\t"+ this.gender +"\t"+ this.age +"\t"+
                 this.inches_per_step +"\t"+ this.metric +"\t"+ this.dateFormat;
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
     }
 }
 

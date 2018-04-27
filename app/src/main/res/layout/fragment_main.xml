@@ -5,7 +5,7 @@
     android:id="@+id/constraintLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity$PlaceholderFragment">
+    tools:context=".TabFragment1">
 
     <TextView
         android:id="@+id/textView8"
@@ -22,7 +22,7 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <android.support.design.widget.FloatingActionButton
-        android:id="@+id/floatingActionButton"
+        android:id="@+id/Btn_play_pause"
         android:layout_width="221dp"
         android:layout_height="159dp"
         android:layout_marginBottom="117dp"

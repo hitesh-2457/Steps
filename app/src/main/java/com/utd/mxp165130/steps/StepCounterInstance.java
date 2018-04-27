@@ -1,19 +1,34 @@
 package com.utd.mxp165130.steps;
 
+import android.annotation.SuppressLint;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class StepCounterInstance {
+@SuppressLint("ParcelCreator")
+public class StepCounterInstance implements Parcelable{
 
     private Date stepCounterInstanceDate;
     private Date startTime;
     private Date endTime;
     private int noOfSteps;
+    private String Datepattern;
     private final double INCHES_TO_MILES = 63360;
     private final double INCHES_TO_KILOMETER = 39370.1;
 
+    StepCounterInstance(){
+
+    }
+    StepCounterInstance(Date date, Date startTime, Date endTime, int noOfSteps){
+        this.stepCounterInstanceDate = date;
+        this.startTime = startTime;
+        this.endTime = endTime;
+        this.noOfSteps = noOfSteps;
+    }
     public void setStepCounterInstanceDate(String date) throws ParseException {
         this.stepCounterInstanceDate = ConvertStringToDate(date);
     }
@@ -26,6 +41,19 @@ public class StepCounterInstance {
     public void setEndTime(String endTime) throws ParseException {
         this.endTime = ConvertStringToDate(endTime);
     }
+
+//    public void setStepCounterInstanceDate(Date date)  {
+//        this.stepCounterInstanceDate = date;
+//    }
+//
+//    public void setStartTime(Date startTime)  {
+//        this.startTime = startTime;
+//
+//    }
+//
+//    public void setEndTime(Date endTime)  {
+//        this.endTime = endTime;
+//    }
 
     public Date getStepCounterInstanceDate(){
         return this.stepCounterInstanceDate;
@@ -47,16 +75,17 @@ public class StepCounterInstance {
         return this.noOfSteps;
     }
 
-    public double getDistance(int unit, double stride){
+    public double getDistance(int unit, double noOfInchesPerStep){
         //1 = miles
         if(unit ==1){
-            return (this.noOfSteps*stride)/INCHES_TO_MILES;
+            return (this.noOfSteps*noOfInchesPerStep)/INCHES_TO_MILES;
         }
         //inches to kilometer
         else {
-            return (this.noOfSteps*stride)/INCHES_TO_KILOMETER;
+            return (this.noOfSteps*noOfInchesPerStep)/INCHES_TO_KILOMETER;
         }
     }
+
 
     @Override
     public String toString() {
@@ -72,10 +101,32 @@ public class StepCounterInstance {
     }
 
     public String ConvertDateToString(Date date, String pattern){
-        DateFormat format= new SimpleDateFormat(pattern);
+        String pattern1 = "dd-MM-yyyy HH:mm:ss";
+        DateFormat format= new SimpleDateFormat(pattern1);
         return format.format(date);
     }
 
+    public String ConvertDateToDateString(Date date,String pattern){
+        //String datepattern = pattern.split(" ")[0];
+        String pattern1 = "dd-MM-yyyy";
+        DateFormat format= new SimpleDateFormat(pattern1);
+        return format.format(date);
+    }
 
+    public String ConvertDateTimeString(Date date,String pattern){
+        //String datepattern = pattern.split(" ")[1];
+        String pattern1 = "HH:mm:ss";
+        DateFormat format= new SimpleDateFormat(pattern1);
+        return format.format(date);
+    }
 
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel dest, int flags) {
+
+    }
 }

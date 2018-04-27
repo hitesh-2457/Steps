@@ -15,6 +15,7 @@ import java.util.List;
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
 
     private ArrayList<StepCounterInstance> items;
+    private UserAccount userAccount;
 
     public class HistoryViewHolder extends RecyclerView.ViewHolder {
         public TextView StepCounterDate, StarTime, EndTime, noOfSteps, Distance;
@@ -30,8 +31,9 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
 
-    public RecyclerViewAdapter(ArrayList<StepCounterInstance> stepCounterInstancesList) {
+    public RecyclerViewAdapter(ArrayList<StepCounterInstance> stepCounterInstancesList, UserAccount user) {
         this.items = stepCounterInstancesList;
+        this.userAccount = user;
     }
 
     @Override
@@ -44,11 +46,17 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-        holder.StepCounterDate.setText("DATE");
-        holder.StarTime.setText("Start Time");
-        holder.EndTime.setText("End Time");
-        holder.noOfSteps.setText("Steps");
-        holder.Distance.setText("Distance");
+//        holder.StepCounterDate.setText("DATE");
+//        holder.StarTime.setText("Start Time");
+//        holder.EndTime.setText("End Time");
+//        holder.noOfSteps.setText("Steps");
+        StepCounterInstance instance = items.get(position);
+        // holder.Distance.setText("Distance");
+        holder.StepCounterDate.setText("Date: "+instance.ConvertDateToDateString(instance.getStepCounterInstanceDate(),userAccount.getDateFormat()));
+        holder.StarTime.setText("Start Time: "+instance.ConvertDateToString(instance.getStartTime(),userAccount.getDateFormat()));
+        holder.EndTime.setText("End Time: "+instance.ConvertDateToString(instance.getEndTime(),userAccount.getDateFormat()));
+        holder.noOfSteps.setText("Number of Steps: "+String.valueOf(instance.getNoOfSteps()));
+        holder.Distance.setText("Distance Travelled: "+String.valueOf(instance.getDistance(1,30)));
     }
 
     @Override
@@ -56,10 +64,15 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return items.size() ;
     }
 
-    public void updateAdapterData(ArrayList<StepCounterInstance> items){
+    public void updateAdapterData(ArrayList<StepCounterInstance> newitems){
         this.items.clear();
-        this.items.addAll(items);
+        this.items.addAll(newitems);
         this.notifyDataSetChanged();
     }
 }
+
+
+
+
+
 

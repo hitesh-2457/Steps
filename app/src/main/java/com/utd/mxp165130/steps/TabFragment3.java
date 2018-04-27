@@ -31,26 +31,26 @@ public  class TabFragment3 extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        View view = inflater.inflate(R.layout.fragment_tab_fragment3, container, false);
+        final View view = inflater.inflate(R.layout.fragment_tab_fragment3, container, false);
         dataObject = (DataProcessing) getArguments().getParcelable(DATA_OBJECT);
         populateFields(view);
         Button BtnSave = (Button) view.findViewById(R.id.BtnSave);
         BtnSave.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                EditText fname = (EditText) v.findViewById(R.id.editTextFirstName);
-                EditText lname = (EditText) v.findViewById(R.id.editTextLastName);
-                EditText gender = (EditText) v.findViewById(R.id.editGender);
-                EditText age = (EditText) v.findViewById(R.id.editAge);
-                EditText noOfInchesPerStep = (EditText) v.findViewById(R.id.editTextNoOfSteps);
-                RadioGroup radioButtonGroup = (RadioGroup) v.findViewById(R.id.unitsRadioGroup);
+                EditText fname = (EditText) view.findViewById(R.id.editTextFirstName);
+                EditText lname = (EditText) view.findViewById(R.id.editTextLastName);
+                EditText gender = (EditText) view.findViewById(R.id.editGender);
+                EditText age = (EditText) view.findViewById(R.id.editAge);
+                EditText noOfInchesPerStep = (EditText) view.findViewById(R.id.editTextNoOfSteps);
+                RadioGroup radioButtonGroup = (RadioGroup) view.findViewById(R.id.unitsRadioGroup);
 
                 int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();
                 View radioButton = radioButtonGroup.findViewById(radioButtonID);
                 int idx = radioButtonGroup.indexOfChild(radioButton);
                 RadioButton r = (RadioButton)  radioButtonGroup.getChildAt(idx);
                 String selectedtext = r.getText().toString();
-                Spinner dateFormat = (Spinner) v.findViewById(R.id.DropDownDateFormat);
+                Spinner dateFormat = (Spinner) view.findViewById(R.id.DropDownDateFormat);
                 String[] UserData = new String[7];
                 UserData[0] = fname.getText().toString();
                 UserData[1] = lname.getText().toString();
@@ -93,7 +93,7 @@ public  class TabFragment3 extends Fragment {
             List<String> DateFormats = Arrays.asList(getResources().getStringArray(R.array.DateFormats));
             dateFormat.setSelection(DateFormats.indexOf(user.getDateFormat()));
         }
-
+       // ((MainActivity) getActivity()).setAdapterUpdate();
     }
 
 }

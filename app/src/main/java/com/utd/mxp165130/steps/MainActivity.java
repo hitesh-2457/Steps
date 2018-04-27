@@ -9,6 +9,7 @@ import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
@@ -21,7 +22,12 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import java.util.ArrayList;
+import java.util.Date;
 
 import static android.support.constraint.Constraints.TAG;
 
@@ -32,6 +38,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private int initialCount = 0;
     private TextView counter;
     private DataProcessing dataObject;
+    //private ArrayList<StepCounterInstance>stepCounterData;
+    private boolean state;
+    private Date currentDate;
+    private Date startTime;
+    private Date stopTime;
+    private RecyclerViewAdapter adapter;
+
 
     /**
      * The {@link android.support.v4.view.PagerAdapter} that will provide
@@ -58,9 +71,18 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             super.onCreate(savedInstanceState);
             loadActivity();
         }
+        dataObject = new DataProcessing();
+        dataObject.readFromStepCounterDataFile(getBaseContext());
+        ArrayList<StepCounterInstance>  stepCounterData = dataObject.getStepCounterData();
+        dataObject.readFromUserAccountDataFile(getBaseContext());
+
         //Sensor
         mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
         mStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
+        state = false;
+        startTime = null;
+        stopTime = null;
+        currentDate = null;
     }
 
     @Override
@@ -88,9 +110,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         //Read the data :
-        dataObject = new DataProcessing();
-        dataObject.readFromStepCounterDataFile(getBaseContext());
-        dataObject.readFromUserAccountDataFile(getBaseContext());
+
 
 
         this.counter = (TextView) findViewById(R.id.textView8);
@@ -131,6 +151,13 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     }
 
     @Override
+    public void onStop(){
+        super.onStop();
+        dataObject.writeToStepCounterDataFile(getBaseContext());
+        dataObject.writeToUserAccountDataFile(getBaseContext());
+    }
+
+    @Override
     public void onSensorChanged(SensorEvent event) {
         Log.i(TAG, "onSensorChanged: --------------------" + String.valueOf((int) event.values[0]));
         this.initialCount += (int) event.values[0];
@@ -142,12 +169,43 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
     }
 
-    public void startRec(View v) {
-        counter = ((View) v.getParent()).findViewById(R.id.textView8);
-        counter.setVisibility(View.VISIBLE);
-        this.initialCount = 0;
-        counter.setText("0");
+    public void setAdapter(RecyclerViewAdapter radapter){
+        adapter = radapter;
     }
+
+    //Play - pause method click
+
+    public void startRec(View v) {
+        state = ! state;
+        //play is clicked
+        if(state){
+            startTime = new Date();
+            currentDate = new Date();
+            FloatingActionButton Btn_play_pause = (FloatingActionButton) findViewById(R.id.Btn_play_pause);
+            Btn_play_pause.setImageResource(android.R.drawable.ic_media_pause);
+            counter = ((View) v.getParent()).findViewById(R.id.textView8);
+            counter.setVisibility(View.VISIBLE);
+            this.initialCount = 0;
+            counter.setText("0");
+
+        }
+        //pause is clicked
+        else{
+            stopTime = new Date();
+            FloatingActionButton Btn_play_pause = (FloatingActionButton) findViewById(R.id.Btn_play_pause);
+            Btn_play_pause.setImageResource(android.R.drawable.ic_media_play);
+
+            //store the data
+            StepCounterInstance instance = new StepCounterInstance(currentDate,startTime,stopTime,initialCount);
+            if(instance!= null) {
+                dataObject.setStepCounterData(instance);
+            }
+            adapter.updateAdapterData(dataObject.getStepCounterData());
+
+        }
+
+    }
+
 
 //    /**
 //     * A placeholder fragment containing a simple view.
@@ -203,7 +261,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             if (position == 0) {
                 return TabFragment1.newInstance();
             } else if (position == 1) {
-                return TabFragment2.newInstance(dataObject);
+                return TabFragment2.newInstance(dataObject.getStepCounterData(),dataObject.getUserData());
             } else {
                 return TabFragment3.newInstance(dataObject);
             }
