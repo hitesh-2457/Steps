@@ -11,12 +11,12 @@ import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-public  class TabFragment3 extends Fragment {
+public class TabFragment3 extends Fragment {
 
     private static String DATA_OBJECT = "dataObject";
     private DataProcessing dataObject;
@@ -49,27 +49,53 @@ public  class TabFragment3 extends Fragment {
                 int radioButtonID = radioButtonGroup.getCheckedRadioButtonId();
                 View radioButton = radioButtonGroup.findViewById(radioButtonID);
                 int idx = radioButtonGroup.indexOfChild(radioButton);
-                RadioButton r = (RadioButton)  radioButtonGroup.getChildAt(idx);
+                RadioButton r = (RadioButton) radioButtonGroup.getChildAt(idx);
                 String selectedtext = r.getText().toString();
                 Spinner dateFormat = (Spinner) view.findViewById(R.id.DropDownDateFormat);
                 String[] UserData = new String[7];
-                UserData[0] = fname.getText().toString();
-                UserData[1] = lname.getText().toString();
-                UserData[2] = gender.getText().toString();
-                UserData[3] = age.getText().toString();
-                UserData[4] = noOfInchesPerStep.getText().toString();
+
+                if (!fname.getText().toString().trim().isEmpty()) {
+                    UserData[0] = fname.getText().toString();
+                } else {
+                    Toast.makeText(getContext(), "First Name can not be Empty", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (!lname.getText().toString().trim().isEmpty()) {
+                    UserData[1] = lname.getText().toString();
+                } else {
+                    Toast.makeText(getContext(), "Last Name can not be Empty", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (!gender.getText().toString().trim().isEmpty()) {
+                    UserData[2] = gender.getText().toString();
+                } else {
+                    Toast.makeText(getContext(), "Gender can not be Empty", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (!age.getText().toString().trim().isEmpty()) {
+                    UserData[3] = age.getText().toString();
+                } else {
+                    Toast.makeText(getContext(), "Age can not be Empty", Toast.LENGTH_SHORT);
+                    return;
+                }
+                if (!noOfInchesPerStep.getText().toString().trim().isEmpty()) {
+                    UserData[4] = noOfInchesPerStep.getText().toString();
+                } else {
+                    Toast.makeText(getContext(), "Number of inches per Step can not be Empty", Toast.LENGTH_SHORT);
+                    return;
+                }
                 UserData[5] = selectedtext;
                 UserData[6] = dateFormat.getSelectedItem().toString();
                 dataObject.setUserData(UserData);
                 ((MainActivity) getActivity()).setAdapterUpdate();
-                ((TabLayout)getActivity().findViewById(R.id.tabs)).getTabAt(0).select();
+                ((TabLayout) getActivity().findViewById(R.id.tabs)).getTabAt(0).select();
             }
         });
 
         return view;
     }
 
-    public void populateFields(View v){
+    public void populateFields(View v) {
 
         EditText fname = (EditText) v.findViewById(R.id.editTextFirstName);
         EditText lname = (EditText) v.findViewById(R.id.editTextLastName);
@@ -81,22 +107,21 @@ public  class TabFragment3 extends Fragment {
         RadioButton selectedUnit = (RadioButton) v.findViewById(selectedRadioBtnId);
         Spinner dateFormat = (Spinner) v.findViewById(R.id.DropDownDateFormat);
         UserAccount user = dataObject.getUserData();
-        if(user!=null){
+        if (user != null) {
             fname.setText(user.getFirstName());
             lname.setText(user.getLastName());
             gender.setText(user.getGender());
             age.setText(String.valueOf(user.getAge()));
             noOfInchesPerStep.setText(String.valueOf(user.getInches_per_step()));
-            if(user.getMetric() == 1) {
+            if (user.getMetric() == 1) {
                 unitsGroup.check(R.id.metricSystem);
-            }
-            else{
+            } else {
                 unitsGroup.check(R.id.USStandardSystem);
             }
             List<String> DateFormats = Arrays.asList(getResources().getStringArray(R.array.DateFormats));
             dateFormat.setSelection(DateFormats.indexOf(user.getDateFormat()));
         }
-       ((MainActivity) getActivity()).setAdapterUpdate();
+        ((MainActivity) getActivity()).setAdapterUpdate();
     }
 
 }
