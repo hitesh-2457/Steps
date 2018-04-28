@@ -1,6 +1,8 @@
 package com.utd.mxp165130.steps;
 
 import android.Manifest;
+import android.app.Activity;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
@@ -70,11 +72,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             super.onCreate(savedInstanceState);
             loadActivity();
         }
-        dataObject = new DataProcessing();
-        dataObject.readFromStepCounterDataFile(getBaseContext());
-        ArrayList<StepCounterInstance>  stepCounterData = dataObject.getStepCounterData();
-        dataObject.readFromUserAccountDataFile(getBaseContext());
-
         //Sensor
         mSensorManager = (SensorManager)this.getSystemService(SENSOR_SERVICE);
         mStepDetector = mSensorManager.getDefaultSensor(Sensor.TYPE_STEP_DETECTOR);
@@ -109,7 +106,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
         //Read the data :
-
+        dataObject = new DataProcessing();
+        dataObject.readFromStepCounterDataFile(getBaseContext());
+        ArrayList<StepCounterInstance> stepCounterData = dataObject.getStepCounterData();
+        dataObject.readFromUserAccountDataFile(getBaseContext());
 
 
         this.counter = (TextView) findViewById(R.id.textView8);
@@ -198,7 +198,10 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             StepCounterInstance instance = new StepCounterInstance(currentDate,startTime,stopTime,initialCount);
             dataObject.setStepCounterData(instance);
             adapter.updateAdapterData(dataObject.getStepCounterData());
-
+            Intent i = new Intent(getBaseContext(),SummaryActivity.class);
+            i.putExtra("UserObj",dataObject.getUserData());
+            i.putExtra("StepCounterObj",instance);
+            startActivity(i);
         }
 
     }

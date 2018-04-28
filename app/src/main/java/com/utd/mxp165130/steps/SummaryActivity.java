@@ -18,15 +18,15 @@ public class SummaryActivity extends AppCompatActivity {
         setContentView(R.layout.activity_summary);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         populateView();
     }
 
     private void populateView() {
         Intent i = getIntent();
-        UserAccount userData = (UserAccount) i.getSerializableExtra("UserObj");
+        UserAccount userData = (UserAccount) i.getExtras().getParcelable("UserObj");
         String pattern = userData.getDateFormat();
-        StepCounterInstance dataObj = (StepCounterInstance) i.getSerializableExtra("StepCounterObj");
+        StepCounterInstance dataObj = (StepCounterInstance) i.getExtras().getParcelable("StepCounterObj");
 
         ((TextView) findViewById(R.id.summaryDate)).setText(dataObj.ConvertDateToString(dataObj.getStepCounterInstanceDate(), pattern).split(" ")[0]);
         ((TextView) findViewById(R.id.summaryStart)).setText(dataObj.ConvertDateToString(dataObj.getStartTime(), pattern).split(" ")[1]);

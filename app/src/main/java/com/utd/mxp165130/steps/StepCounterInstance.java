@@ -29,6 +29,18 @@ public class StepCounterInstance implements Parcelable{
         this.endTime = endTime;
         this.noOfSteps = noOfSteps;
     }
+
+    public StepCounterInstance(Parcel in) {
+        try {
+            this.stepCounterInstanceDate = this.ConvertStringToDate(in.readString());
+            this.startTime = this.ConvertStringToDate(in.readString());
+            this.endTime = this.ConvertStringToDate(in.readString());
+            this.noOfSteps = in.readInt();
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+    }
+
     public void setStepCounterInstanceDate(String date) throws ParseException {
         this.stepCounterInstanceDate = ConvertStringToDate(date);
     }
@@ -127,6 +139,20 @@ public class StepCounterInstance implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(this.ConvertDateToString(this.stepCounterInstanceDate,"dd-MM-yyyy HH:mm:ss"));
+        dest.writeString(this.ConvertDateToString(this.startTime,"dd-MM-yyyy HH:mm:ss"));
+        dest.writeString(this.ConvertDateToString(this.endTime,"dd-MM-yyyy HH:mm:ss"));
+        dest.writeInt(this.noOfSteps);
     }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public StepCounterInstance createFromParcel(Parcel in) {
+            return new StepCounterInstance(in);
+        }
+
+        @Override
+        public Object[] newArray(int size) {
+            return new Object[0];
+        }
+    };
 }

@@ -13,39 +13,53 @@ public class UserAccount implements Parcelable {
     private int metric;
     private String dateFormat;
 
-    public void setFirstName(String fname){
+    public UserAccount() {
+
+    }
+
+    public UserAccount(Parcel in) {
+        this.firstName = in.readString();
+        this.lastName = in.readString();
+        this.gender = in.readString();
+        this.age = in.readInt();
+        this.inches_per_step = in.readDouble();
+        this.metric = in.readInt();
+        this.dateFormat = in.readString();
+    }
+
+    public void setFirstName(String fname) {
         this.firstName = fname;
     }
 
-    public void setLastName(String lname){
+    public void setLastName(String lname) {
         this.lastName = lname;
     }
 
-    public void setGender(String gender){
+    public void setGender(String gender) {
         this.gender = gender;
     }
 
-    public void setAge(String age){
+    public void setAge(String age) {
         this.age = Integer.parseInt(age);
     }
 
-    public void setInches_per_step(String inches_per_step){
+    public void setInches_per_step(String inches_per_step) {
         this.inches_per_step = Double.parseDouble(inches_per_step);
     }
 
-    public void setMetric(String metric){
+    public void setMetric(String metric) {
         this.metric = Integer.parseInt(metric);
     }
 
-    public void setDateFormat(String format){
+    public void setDateFormat(String format) {
         this.dateFormat = format;
     }
 
-    public String getFirstName(){
+    public String getFirstName() {
         return this.firstName;
     }
 
-    public String getLastName(){
+    public String getLastName() {
         return this.lastName;
     }
 
@@ -53,15 +67,15 @@ public class UserAccount implements Parcelable {
         return this.gender;
     }
 
-    public int getAge(){
+    public int getAge() {
         return this.age;
     }
 
-    public double getInches_per_step(){
+    public double getInches_per_step() {
         return this.inches_per_step;
     }
 
-    public int getMetric(){
+    public int getMetric() {
         return this.metric;
     }
 
@@ -71,8 +85,8 @@ public class UserAccount implements Parcelable {
 
     @Override
     public String toString() {
-        return this.firstName +"\t"+ this.lastName +"\t"+ this.gender +"\t"+ this.age +"\t"+
-                this.inches_per_step +"\t"+ this.metric +"\t"+ this.dateFormat;
+        return this.firstName + "\t" + this.lastName + "\t" + this.gender + "\t" + this.age + "\t" +
+                this.inches_per_step + "\t" + this.metric + "\t" + this.dateFormat;
     }
 
     @Override
@@ -82,7 +96,24 @@ public class UserAccount implements Parcelable {
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-
+        dest.writeString(this.firstName);
+        dest.writeString(this.lastName);
+        dest.writeString(this.gender);
+        dest.writeInt(this.age);
+        dest.writeDouble(this.inches_per_step);
+        dest.writeInt(this.metric);
+        dest.writeString(this.dateFormat);
     }
+
+    public static final Parcelable.Creator CREATOR = new Parcelable.Creator() {
+        public UserAccount createFromParcel(Parcel in) {
+            return new UserAccount(in);
+        }
+
+        @Override
+        public Object[] newArray(int size) {
+            return new Object[0];
+        }
+    };
 }
 
