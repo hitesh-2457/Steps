@@ -1,6 +1,7 @@
 package com.utd.mxp165130.steps;
 
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -60,6 +61,8 @@ public  class TabFragment3 extends Fragment {
                 UserData[5] = selectedtext;
                 UserData[6] = dateFormat.getSelectedItem().toString();
                 dataObject.setUserData(UserData);
+                ((MainActivity) getActivity()).setAdapterUpdate();
+                ((TabLayout)getActivity().findViewById(R.id.tabs)).getTabAt(0).select();
             }
         });
 

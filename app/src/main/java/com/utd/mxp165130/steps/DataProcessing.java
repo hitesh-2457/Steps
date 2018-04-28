@@ -161,7 +161,7 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
             userData.setGender(userDataStrings[2]);
             userData.setAge(userDataStrings[3]);
             userData.setInches_per_step(userDataStrings[4]);
-            if (userDataStrings[5].equals("Metric System")) {
+            if (userDataStrings[5].equals("Metric System")||userDataStrings[5].equals("1")) {
                 userData.setMetric("1");
             } else {
                 userData.setMetric("2");
