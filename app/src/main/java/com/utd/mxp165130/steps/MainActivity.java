@@ -92,7 +92,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setDisplayUseLogoEnabled(true);
         getSupportActionBar().setIcon(R.drawable.ic_action_name);
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
