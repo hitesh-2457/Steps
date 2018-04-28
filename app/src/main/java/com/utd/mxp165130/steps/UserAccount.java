@@ -75,6 +75,10 @@ public class UserAccount implements Parcelable {
         return this.inches_per_step;
     }
 
+    public String getMetricUnit() {
+        return this.metric == 1 ? "km" : "miles";
+    }
+
     public int getMetric() {
         return this.metric;
     }

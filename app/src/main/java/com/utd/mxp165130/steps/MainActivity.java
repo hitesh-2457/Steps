@@ -38,6 +38,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     private static Sensor mStepDetector;
     private int initialCount = 0;
     private TextView counter;
+    private TextView dateDisplay;
     private DataProcessing dataObject;
     //private ArrayList<StepCounterInstance>stepCounterData;
     private boolean state;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         ArrayList<StepCounterInstance> stepCounterData = dataObject.getStepCounterData();
         dataObject.readFromUserAccountDataFile(getBaseContext());
 
-        this.counter = (TextView) findViewById(R.id.textView8);
+        this.counter = (TextView) findViewById(R.id.txtStepsDisplay);
     }
 
     @Override
@@ -181,16 +182,20 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         if(state){
             startTime = new Date();
             currentDate = new Date();
+            dateDisplay = ((View) v.getParent()).findViewById(R.id.txtDateDisplay);
+            dateDisplay.setText(dataObject.ConvertDateToString(currentDate,dataObject.getUserData().getDateFormat()));
             FloatingActionButton Btn_play_pause = (FloatingActionButton) findViewById(R.id.Btn_play_pause);
             Btn_play_pause.setImageResource(android.R.drawable.ic_media_pause);
-            counter = ((View) v.getParent()).findViewById(R.id.textView8);
+            counter = ((View) v.getParent()).findViewById(R.id.txtStepsDisplay);
             counter.setVisibility(View.VISIBLE);
+            dateDisplay.setVisibility(View.VISIBLE);
             this.initialCount = 0;
             counter.setText("0");
 
         }
         //pause is clicked
         else{
+            dateDisplay.setVisibility(View.INVISIBLE);
             stopTime = new Date();
             FloatingActionButton Btn_play_pause = (FloatingActionButton) findViewById(R.id.Btn_play_pause);
             Btn_play_pause.setImageResource(android.R.drawable.ic_media_play);

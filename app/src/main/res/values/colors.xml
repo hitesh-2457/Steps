@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#3F51B5</color>
-    <color name="colorPrimaryDark">#303F9F</color>
-    <color name="colorAccent">#4059ff</color>
+    <color name="colorPrimary">#7d42a1</color>
+    <color name="colorPrimaryDark">#43226e</color>
+    <color name="colorAccent">#a158ea</color>
+    <color name="ButtonColor">#7d42a1</color>
+    <color name="StepsColor">#3e964d</color>
+    <color name="DistanceColor">#3e964d</color>
+
 </resources>

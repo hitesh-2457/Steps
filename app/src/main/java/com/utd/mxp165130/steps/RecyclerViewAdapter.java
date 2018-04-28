@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
@@ -18,11 +19,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public HistoryViewHolder(View view) {
             super(view);
-            StepCounterDate = (TextView) view.findViewById(R.id.textView3);
-            StarTime = (TextView) view.findViewById(R.id.textView4);
-            EndTime = (TextView) view.findViewById(R.id.textView5);
-            noOfSteps = (TextView) view.findViewById(R.id.textView6);
-            Distance = (TextView) view.findViewById(R.id.textView7);
+            StepCounterDate = (TextView) view.findViewById(R.id.txtHistoryDate);
+            StarTime = (TextView) view.findViewById(R.id.txtHistoryStartTime);
+            EndTime = (TextView) view.findViewById(R.id.txtHistoryStopTime);
+            noOfSteps = (TextView) view.findViewById(R.id.txtHistoryNoOfSteps);
+            Distance = (TextView) view.findViewById(R.id.txtHistoryDistance);
 
         }
 
@@ -58,7 +59,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         holder.StarTime.setText("Start Time: " + instance.ConvertDateToTimeString(instance.getStartTime(), userAccount.getDateFormat()));
         holder.EndTime.setText("End Time: " + instance.ConvertDateToTimeString(instance.getEndTime(), userAccount.getDateFormat()));
         holder.noOfSteps.setText("Number of Steps: " + String.valueOf(instance.getNoOfSteps()));
-        holder.Distance.setText("Distance Travelled: " + String.valueOf(instance.getDistance(instance.getNoOfSteps(), userAccount.getMetric())));
+        holder.Distance.setText(String.format("Distance Travelled: %s %s", String.valueOf(new DecimalFormat("0.##").format(instance.getDistance(userAccount.getMetric(), userAccount.getInches_per_step()))), userAccount.getMetricUnit()));
     }
 
     @Override

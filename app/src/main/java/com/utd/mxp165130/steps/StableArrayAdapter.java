@@ -1,16 +1,12 @@
 package com.utd.mxp165130.steps;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.EnumSet;
 import java.util.List;
 
 
@@ -50,10 +46,10 @@ public class StableArrayAdapter extends ArrayAdapter<StepCounterInstance>
         LayoutInflater inflater = (LayoutInflater) cx.getSystemService(cx.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.history_row, parent, false);
         StepCounterInstance instance = items.get(position);
-        StepCounterDate = (TextView) rowView.findViewById(R.id.textView3);
-        StarTime = (TextView) rowView.findViewById(R.id.textView4);
-        EndTime = (TextView) rowView.findViewById(R.id.textView5);
-        noOfSteps = (TextView) rowView.findViewById(R.id.textView6);
+        StepCounterDate = (TextView) rowView.findViewById(R.id.txtHistoryDate);
+        StarTime = (TextView) rowView.findViewById(R.id.txtHistoryStartTime);
+        EndTime = (TextView) rowView.findViewById(R.id.txtHistoryStopTime);
+        noOfSteps = (TextView) rowView.findViewById(R.id.txtHistoryNoOfSteps);
         StepCounterDate.setText(instance.ConvertDateToString(instance.getStepCounterInstanceDate(),userAccount.getDateFormat()));
         StarTime.setText(instance.ConvertDateToString(instance.getStartTime(),userAccount.getDateFormat()));
         EndTime.setText(instance.ConvertDateToString(instance.getEndTime(),userAccount.getDateFormat()));
