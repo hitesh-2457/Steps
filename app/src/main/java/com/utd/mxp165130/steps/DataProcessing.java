@@ -51,6 +51,9 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
         return stepCounterData;
     }
 
+    public StepCounterInstance getStepCounterData(int position) {
+        return stepCounterData.get(position);
+    }
 
     public StepCounterInstance setStepCounterInstance(String[] stepCounterDataStrings) {
 
