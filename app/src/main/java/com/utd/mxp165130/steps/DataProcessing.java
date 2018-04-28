@@ -172,23 +172,22 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
 
     public void readFromUserAccountDataFile(Context context) {
 
+
         try {
             File file = new File(User_DATA_FILENAME);
-            if (!file.exists()) {
-                file.createNewFile();
-                return;
-            }
-            InputStream inputStream = context.openFileInput(User_DATA_FILENAME);
+            boolean fileCreated = file.createNewFile();
+            if (!fileCreated) {
+                FileReader fileReader = new FileReader(file);
+                BufferedReader bufferedReader = new BufferedReader(fileReader);
+                String line = bufferedReader.readLine();
+                this.setUserData(line.split("\t"));
+                Log.i(TAG, "readFromStepCounterDataFile: "+line);
 
-            if (inputStream != null) {
-                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-                String line;
-                while ((line = bufferedReader.readLine()) != null) {
-                    this.setUserData(line.split("\t"));
-
-                }
+                bufferedReader.close();
+                fileReader.close();
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             e.printStackTrace();
         }
     }
