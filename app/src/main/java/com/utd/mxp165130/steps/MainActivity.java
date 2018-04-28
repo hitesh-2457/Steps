@@ -172,6 +172,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
         adapter = radapter;
     }
 
+    public void setAdapterUpdate(){adapter.updateAdapterData();}
     //Play - pause method click
 
     public void startRec(View v) {
@@ -197,7 +198,7 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
             //store the data
             StepCounterInstance instance = new StepCounterInstance(currentDate,startTime,stopTime,initialCount);
             dataObject.setStepCounterData(instance);
-            adapter.updateAdapterData(dataObject.getStepCounterData());
+            adapter.updateAdapterData();
             Intent i = new Intent(getBaseContext(),SummaryActivity.class);
             i.putExtra("UserObj",dataObject.getUserData());
             i.putExtra("StepCounterObj",instance);

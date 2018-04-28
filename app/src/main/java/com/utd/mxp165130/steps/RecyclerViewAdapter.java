@@ -53,8 +53,8 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         StepCounterInstance instance = items.get(position);
         // holder.Distance.setText("Distance");
         holder.StepCounterDate.setText("Date: "+instance.ConvertDateToDateString(instance.getStepCounterInstanceDate(),userAccount.getDateFormat()));
-        holder.StarTime.setText("Start Time: "+instance.ConvertDateToString(instance.getStartTime(),userAccount.getDateFormat()));
-        holder.EndTime.setText("End Time: "+instance.ConvertDateToString(instance.getEndTime(),userAccount.getDateFormat()));
+        holder.StarTime.setText("Start Time: "+instance.ConvertDateToTimeString(instance.getStartTime(),userAccount.getDateFormat()));
+        holder.EndTime.setText("End Time: "+instance.ConvertDateToTimeString(instance.getEndTime(),userAccount.getDateFormat()));
         holder.noOfSteps.setText("Number of Steps: "+String.valueOf(instance.getNoOfSteps()));
         holder.Distance.setText("Distance Travelled: "+String.valueOf(instance.getDistance(1,30)));
     }
@@ -64,9 +64,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
         return items.size() ;
     }
 
-    public void updateAdapterData(ArrayList<StepCounterInstance> newitems){
-        this.items.clear();
-        this.items.addAll(newitems);
+    public void updateAdapterData(){
         this.notifyDataSetChanged();
     }
 }

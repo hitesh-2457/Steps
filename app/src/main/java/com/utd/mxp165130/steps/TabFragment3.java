@@ -93,7 +93,7 @@ public  class TabFragment3 extends Fragment {
             List<String> DateFormats = Arrays.asList(getResources().getStringArray(R.array.DateFormats));
             dateFormat.setSelection(DateFormats.indexOf(user.getDateFormat()));
         }
-       // ((MainActivity) getActivity()).setAdapterUpdate();
+       ((MainActivity) getActivity()).setAdapterUpdate();
     }
 
 }
