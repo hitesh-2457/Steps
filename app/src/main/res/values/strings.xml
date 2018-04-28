@@ -11,11 +11,11 @@
     <string name="title_activity_history_items">HistoryItems</string>
     <string name="title_activity_summary">SummaryActivity</string>
     <string-array name="DateFormats">
-        <item>mm/dd/yyyy hh:mm:ss</item>
-        <item>dd/mm/yyyy hh:mm:ss</item>
-        <item>dd/mm/yy hh:mm:ss</item>
-        <item>mm/dd/yy hh:mm:ss</item>
-        <item>yyyy/mm/dd hh:mm:ss</item>
-        <item>yy/mm/dd hh:mm:ss</item>
+        <item>MM/dd/yyyy hh:mm:ss</item>
+        <item>dd/MM/yyyy hh:mm:ss</item>
+        <item>dd/MM/yy hh:mm:ss</item>
+        <item>MM/dd/yy hh:mm:ss</item>
+        <item>yyyy/MM/dd hh:mm:ss</item>
+        <item>yy/MM/dd hh:mm:ss</item>
     </string-array>
 </resources>

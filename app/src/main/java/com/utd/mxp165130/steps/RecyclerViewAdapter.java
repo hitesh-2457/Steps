@@ -12,12 +12,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
+public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder>  {
 
     private ArrayList<StepCounterInstance> items;
     private UserAccount userAccount;
 
-    public class HistoryViewHolder extends RecyclerView.ViewHolder {
+    public class HistoryViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener{
         public TextView StepCounterDate, StarTime, EndTime, noOfSteps, Distance;
 
         public HistoryViewHolder(View view) {
@@ -27,6 +27,12 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
             EndTime = (TextView) view.findViewById(R.id.textView5);
             noOfSteps = (TextView) view.findViewById(R.id.textView6);
             Distance = (TextView) view.findViewById(R.id.textView7);
+
+        }
+
+        @Override
+        public void onClick(View v) {
+
         }
     }
 

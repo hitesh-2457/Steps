@@ -121,7 +121,7 @@ public class StepCounterInstance implements Parcelable{
     public String ConvertDateToDateString(Date date,String pattern){
         String datepattern = pattern.split(" ")[0];
         //String pattern1 = "dd-MM-yyyy";
-        DateFormat format= new SimpleDateFormat(pattern);
+        DateFormat format= new SimpleDateFormat(datepattern);
         return format.format(date);
     }
 
