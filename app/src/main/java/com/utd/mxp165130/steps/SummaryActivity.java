@@ -28,12 +28,12 @@ public class SummaryActivity extends AppCompatActivity {
         String pattern = userData.getDateFormat();
         StepCounterInstance dataObj = (StepCounterInstance) i.getExtras().getParcelable("StepCounterObj");
 
-        ((TextView) findViewById(R.id.summaryDate)).setText(dataObj.ConvertDateToString(dataObj.getStepCounterInstanceDate(), pattern).split(" ")[0]);
-        ((TextView) findViewById(R.id.summaryStart)).setText(dataObj.ConvertDateToString(dataObj.getStartTime(), pattern).split(" ")[1]);
-        ((TextView) findViewById(R.id.summaryEnd)).setText(dataObj.ConvertDateToString(dataObj.getEndTime(), pattern).split(" ")[1]);
+        ((TextView) findViewById(R.id.summaryDate)).setText("Date: "+dataObj.ConvertDateToString(dataObj.getStepCounterInstanceDate(), pattern).split(" ")[0]);
+        ((TextView) findViewById(R.id.summaryStart)).setText("Start Time: "+dataObj.ConvertDateToString(dataObj.getStartTime(), pattern).split(" ")[1]);
+        ((TextView) findViewById(R.id.summaryEnd)).setText("End Time: "+dataObj.ConvertDateToString(dataObj.getEndTime(), pattern).split(" ")[1]);
 
-        ((TextView) findViewById(R.id.summarySteps)).setText(String.valueOf(dataObj.getNoOfSteps()));
-        ((TextView) findViewById(R.id.summaryMiles)).setText(new DecimalFormat("0.##").format(dataObj.getDistance(userData.getMetric(), userData.getInches_per_step())));
+        ((TextView) findViewById(R.id.summarySteps)).setText("Steps: "+String.valueOf(dataObj.getNoOfSteps()));
+        ((TextView) findViewById(R.id.summaryMiles)).setText("Distance: "+new DecimalFormat("0.##").format(dataObj.getDistance(userData.getMetric(), userData.getInches_per_step())));
     }
 
     @Override
