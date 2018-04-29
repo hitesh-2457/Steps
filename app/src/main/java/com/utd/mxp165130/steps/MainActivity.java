@@ -1,3 +1,23 @@
+/**************************
+ * Step Counter program
+ * Class : CS6326.001
+ * Spring 2018
+ *
+ * Coder 1:
+ * 	Hitesh Gupta Tumsi Ramesh
+ *   netId: hxg170230
+ * Coder 2:
+ * 	Meghana Pochiraju
+ * 	netId: mxp165130
+ *
+ * The Launcher Activity designed and built over the default TabLayout provided by android studio.
+ * - Handles permission request to write to the external storage.
+ * - Handles the TabLayout and Fragment Binding.
+ * - Using FragmentPagerAdapter which save the fragments that are loaded.
+ * - Configured it to load all the three fragments.
+ *
+ * Stores the User data and history in DataProcessing object (dataObject).
+ **************************/
 package com.utd.mxp165130.steps;
 
 import android.Manifest;
@@ -25,22 +45,18 @@ public class MainActivity extends AppCompatActivity {
     private RecyclerViewAdapter adapter;
     private SensorFragment sensorFragment;
 
-
-    /**
-     * The {@link android.support.v4.view.PagerAdapter} that will provide
-     * fragments for each of the sections. We use a
-     * {@link FragmentPagerAdapter} derivative, which will keep every
-     * loaded fragment in memory. If this becomes too memory intensive, it
-     * may be best to switch to a
-     * {@link android.support.v4.app.FragmentStatePagerAdapter}.
-     */
     private SectionsPagerAdapter mSectionsPagerAdapter;
 
-    /**
-     * The {@link ViewPager} that will host the section contents.
-     */
     private ViewPager mViewPager;
 
+    /**************************
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * onCrete handler
+     *  - Requests for permission and waits before continuing.
+     *
+     * @param savedInstanceState : Bundle object
+     **************************/
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,11 +69,27 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
+    /**************************
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * onCrete handler
+     *  - Requests for permission and waits before continuing.
+     *
+     * @param requestCode : requestCode, expected return code.
+     * @param permissions : Array of permissions requested
+     * @param grantResults : Array of permissions granted
+     **************************/
     @Override
     public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         loadActivity();
     }
 
+    /**************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * - The function that is invoked once permissions are received inflates the view to the Main Activity.
+     * - Reads data from File and handles setting the adapter to the tabLayout.
+     **************************/
     private void loadActivity() {
         setContentView(R.layout.activity_main);
 
@@ -65,6 +97,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
+
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
@@ -74,19 +107,23 @@ public class MainActivity extends AppCompatActivity {
         mViewPager.setAdapter(mSectionsPagerAdapter);
         mViewPager.setOffscreenPageLimit(2);
 
-
         TabLayout tabLayout = findViewById(R.id.tabs);
 
         mViewPager.addOnPageChangeListener(new TabLayout.TabLayoutOnPageChangeListener(tabLayout));
         tabLayout.addOnTabSelectedListener(new TabLayout.ViewPagerOnTabSelectedListener(mViewPager));
 
-        //Read the data :
+        //Read data from file
         dataObject = new DataProcessing();
         dataObject.readFromStepCounterDataFile(getBaseContext());
         ArrayList<StepCounterInstance> stepCounterData = dataObject.getStepCounterData();
         dataObject.readFromUserAccountDataFile(getBaseContext());
     }
 
+    /**************************
+     * onRequestDisallowInterceptTouchEvent handler, Unused
+     *
+     * @param menu : Menu object.
+     **************************/
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -94,6 +131,11 @@ public class MainActivity extends AppCompatActivity {
         return true;
     }
 
+    /**************************
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * onRequestDisallowInterceptTouchEvent handler, Unused
+     **************************/
     @Override
     public void onStop() {
         super.onStop();
@@ -101,32 +143,65 @@ public class MainActivity extends AppCompatActivity {
         dataObject.writeToUserAccountDataFile(getBaseContext());
     }
 
+    /****************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * Sets adapter.
+     *
+     * @param recyclerAdapter the recycler adapter
+     ****************************/
     public void setAdapter(RecyclerViewAdapter recyclerAdapter) {
         adapter = recyclerAdapter;
     }
 
+    /****************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * Sets adapter update.
+     ****************************/
     public void setAdapterUpdate() {
         adapter.updateAdapterData();
     }
 
-    public void startRec(View v){
-        sensorFragment.startRec(v);
+    /****************************
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * Click Handler on the play/pause button
+     *
+     * @param view the view on which the handler is called.
+     ****************************/
+    public void startRec(View view) {
+        sensorFragment.startRec(view);
     }
 
-    /**
-     * A {@link FragmentPagerAdapter} that returns a fragment corresponding to
-     * one of the sections/tabs/pages.
-     */
+    /****************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * A FragmentPagerAdapter that returns a fragment corresponding to the tab.
+     ****************************/
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 
+        private static final String TAG = "MyActivity";
+
+        /****************************
+         * Coder: Meghana Pochiraju (mxp165130)
+         *
+         * Instantiates a new Sections pager adapter.
+         *
+         * @param fm the fm
+         ****************************/
         public SectionsPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
-        private static final String TAG = "MyActivity";
-
-        // getItem is called to instantiate the fragment for the given page.
-        // Return a PlaceholderFragment (defined as a static inner class below).
+        /****************************
+         * Coder: Meghana Pochiraju (mxp165130)
+         *
+         * getItem is called to instantiate the fragment for the given page.
+         *
+         * @param position : the position of the fragment
+         * @return Fragment : Return a PlaceholderFragment
+         ****************************/
         @Override
         public Fragment getItem(int position) {
             Log.i(TAG, "getItem: --------------------" + position + "--------------------");
@@ -140,9 +215,14 @@ public class MainActivity extends AppCompatActivity {
             }
         }
 
+        /****************************
+         * Coder: Meghana Pochiraju (mxp165130)
+         *
+         * Getter for the count of fragments.
+         * @return Count of Fragments.
+         ****************************/
         @Override
         public int getCount() {
-            // Show 3 total pages.
             return 3;
         }
     }

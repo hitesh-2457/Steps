@@ -1,3 +1,25 @@
+/**************************
+ * Step Counter program
+ * Class : CS6326.001
+ * Spring 2018
+ *
+ * Coder 1:
+ * 	Hitesh Gupta Tumsi Ramesh
+ *   netId: hxg170230
+ * Coder 2:
+ * 	Meghana Pochiraju
+ * 	netId: mxp165130
+ *
+ * This is a Fragment that is designed to handle
+ * Account details and User preferences.
+ *
+ * This Fragment has two main functionality,
+ *  1. Populate the previous details and preferences of the user.
+ *  2. Update any changes in any details and preferences and update the application.
+ *
+ * The User Details and Preferences are stored in the DataProcessing object (dataObj).
+ **************************/
+
 package com.utd.mxp165130.steps;
 
 import android.os.Bundle;
@@ -21,6 +43,16 @@ public class AccountFragment extends Fragment {
     private static String DATA_OBJECT = "dataObject";
     private DataProcessing dataObject;
 
+    /**************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * Bundles the data to be passed to the Fragment
+     * and returns the fragment back to the invoking function.
+     *
+     * @param dataObject : DataProcessing object.
+     *
+     * @return AccountFragment : an instance of AccountFragment
+     **************************/
     public static AccountFragment newInstance(DataProcessing dataObject) {
         AccountFragment fragment = new AccountFragment();
         Bundle args = new Bundle();
@@ -29,6 +61,19 @@ public class AccountFragment extends Fragment {
         return fragment;
     }
 
+    /**************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * onCreateView Handler,
+     *  this function extracts data from the bundle and saves on to the global variables
+     *  this function also binds on click handler to the save button.
+     *
+     * @param inflater : LayoutInflater
+     * @param container : View that is the parent of generated view
+     * @param savedInstanceState : Bundle object containing arguments.
+     *
+     * @return View : the fragment's view.
+     **************************/
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
@@ -46,6 +91,15 @@ public class AccountFragment extends Fragment {
         return view;
     }
 
+    /**************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * function Handles the on click event on save button,
+     *  this function validates the editable text fields and raises toasts.
+     *  this function handles saving the data to an object and navigates to the SensorFragment.
+     *
+     * @param view : View of the event generator.
+     **************************/
     private void onClickHandle(View view) {
         EditText fname = view.findViewById(R.id.editTextFirstName);
         EditText lname = view.findViewById(R.id.editTextLastName);
@@ -62,6 +116,7 @@ public class AccountFragment extends Fragment {
         Spinner dateFormat = view.findViewById(R.id.DropDownDateFormat);
         String[] UserData = new String[7];
 
+        /* Validating editable fields */
         if (!fname.getText().toString().trim().isEmpty()) {
             UserData[0] = fname.getText().toString();
         } else {
@@ -92,24 +147,34 @@ public class AccountFragment extends Fragment {
             Toast.makeText(getContext(), "Number of inches per Step can not be Empty", Toast.LENGTH_SHORT).show();
             return;
         }
+
         UserData[5] = selectedtext;
         UserData[6] = dateFormat.getSelectedItem().toString();
         dataObject.setUserData(UserData);
+
+        /* Update the Recycler view based on new preferences. */
         ((MainActivity) getActivity()).setAdapterUpdate();
+
+        /* Navigate to SensorFragment */
         ((TabLayout) getActivity().findViewById(R.id.tabs)).getTabAt(0).select();
     }
 
-    public void populateFields(View v) {
+    /**************************
+     * Coder: Meghana Pochiraju (mxp165130)
+     *
+     * This function is responsible to populate all the fields with the data from user object.
+     *
+     * @param view : the view which contains the editable fields.
+     **************************/
+    public void populateFields(View view) {
 
-        EditText fname = v.findViewById(R.id.editTextFirstName);
-        EditText lname = v.findViewById(R.id.editTextLastName);
-        EditText gender = v.findViewById(R.id.editGender);
-        EditText age = v.findViewById(R.id.editAge);
-        EditText noOfInchesPerStep = v.findViewById(R.id.editTextNoOfSteps);
-        RadioGroup unitsGroup = v.findViewById(R.id.unitsRadioGroup);
-//        int selectedRadioBtnId = unitsGroup.getCheckedRadioButtonId();
-//        RadioButton selectedUnit = v.findViewById(selectedRadioBtnId);
-        Spinner dateFormat = v.findViewById(R.id.DropDownDateFormat);
+        EditText fname = view.findViewById(R.id.editTextFirstName);
+        EditText lname = view.findViewById(R.id.editTextLastName);
+        EditText gender = view.findViewById(R.id.editGender);
+        EditText age = view.findViewById(R.id.editAge);
+        EditText noOfInchesPerStep = view.findViewById(R.id.editTextNoOfSteps);
+        RadioGroup unitsGroup = view.findViewById(R.id.unitsRadioGroup);
+        Spinner dateFormat = view.findViewById(R.id.DropDownDateFormat);
         UserAccount user = dataObject.getUserData();
         if (user != null) {
             fname.setText(user.getFirstName());
@@ -125,7 +190,6 @@ public class AccountFragment extends Fragment {
             List<String> DateFormats = Arrays.asList(getResources().getStringArray(R.array.DateFormats));
             dateFormat.setSelection(DateFormats.indexOf(user.getDateFormat()));
         }
-        ((MainActivity) getActivity()).setAdapterUpdate();
     }
 
 }
