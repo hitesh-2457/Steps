@@ -13,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import java.text.DecimalFormat;
 import java.util.Date;
 
 import static android.content.Context.SENSOR_SERVICE;
@@ -72,6 +73,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
             distance.setText("0");
             counter.setVisibility(View.VISIBLE);
             dateDisplay.setVisibility(View.VISIBLE);
+            distance.setVisibility(View.VISIBLE);
             this.initialCount = 0;
             counter.setText("0");
 
@@ -101,7 +103,7 @@ public class SensorFragment extends Fragment implements SensorEventListener {
         UserAccount user = dataObject.getUserData();
         this.initialCount += (int) event.values[0];
         this.counter.setText(String.valueOf(initialCount));
-        this.distance.setText(String.format("%s%s", dataObject.getDistance(user.getMetric(), user.getInches_per_step(), initialCount), user.getMetricUnit()));
+        this.distance.setText(String.format("%s %s", new DecimalFormat("0.##").format(dataObject.getDistance(user.getMetric(), user.getInches_per_step(), initialCount)), user.getMetricUnit()));
     }
 
     @Override
