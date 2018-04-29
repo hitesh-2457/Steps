@@ -3,6 +3,7 @@ package com.utd.mxp165130.steps;
 import android.annotation.SuppressLint;
 import android.os.Parcel;
 import android.os.Parcelable;
+import android.support.annotation.NonNull;
 
 import java.text.DateFormat;
 import java.text.ParseException;
@@ -10,7 +11,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressLint("ParcelCreator")
-public class StepCounterInstance implements Parcelable{
+public class StepCounterInstance implements Parcelable, Comparable<StepCounterInstance>{
 
     private Date stepCounterInstanceDate;
     private Date startTime;
@@ -155,4 +156,17 @@ public class StepCounterInstance implements Parcelable{
             return new Object[0];
         }
     };
+
+    @Override
+    public int compareTo(@NonNull StepCounterInstance o) {
+        if(this.stepCounterInstanceDate.after(o.stepCounterInstanceDate)) {
+            return -1;
+        }
+        else if(this.stepCounterInstanceDate.before(o.stepCounterInstanceDate)) {
+            return 1;
+        }
+        else{
+            return 0;
+        }
+    }
 }

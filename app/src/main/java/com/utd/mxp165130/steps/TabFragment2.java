@@ -11,6 +11,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import static android.widget.GridLayout.VERTICAL;
 
@@ -55,6 +56,7 @@ public class TabFragment2 extends Fragment {
                 }
             })
         );
+        Collections.sort(stepCounterData);
         RecyclerViewAdapter adapter = new RecyclerViewAdapter(stepCounterData, user);
         recyclerView.setAdapter(adapter);
         ((MainActivity) getActivity()).setAdapter(adapter);

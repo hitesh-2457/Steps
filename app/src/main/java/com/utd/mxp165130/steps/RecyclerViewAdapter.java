@@ -8,6 +8,7 @@ import android.widget.TextView;
 
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapter.HistoryViewHolder> {
 
@@ -37,18 +38,19 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     public RecyclerViewAdapter(ArrayList<StepCounterInstance> stepCounterInstancesList, UserAccount user) {
         this.items = stepCounterInstancesList;
         this.userAccount = user;
+
     }
 
     @Override
     public HistoryViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView = LayoutInflater.from(parent.getContext())
                 .inflate(R.layout.history_row, parent, false);
-
         return new HistoryViewHolder(itemView);
     }
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
+
 //        holder.StepCounterDate.setText("DATE");
 //        holder.StarTime.setText("Start Time");
 //        holder.EndTime.setText("End Time");
@@ -68,6 +70,7 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
     }
 
     public void updateAdapterData() {
+        Collections.sort(this.items);
         this.notifyDataSetChanged();
     }
 }
