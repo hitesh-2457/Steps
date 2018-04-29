@@ -1,3 +1,24 @@
+/******************************************************************************
+ * Step Counter program
+ * Class : CS6326.001
+ * Spring 2018
+ *
+ * Coder 1:
+ * 	 Hitesh Gupta Tumsi Ramesh
+ *   netId: hxg170230
+ * Coder 2:
+ * 	 Meghana Pochiraju
+ * 	 netId: mxp165130
+ *
+ * This is activity class to display the StepCounterInstance in more detail
+ *
+ * It has methods to set the text fields for the date, start time, end time,
+ * number of steps and the distance traveled.
+ *
+ * It has a back button to go back to the activity that clalled it.
+ *
+ ******************************************************************************/
+
 package com.utd.mxp165130.steps;
 
 import android.content.Intent;
@@ -11,6 +32,14 @@ import java.text.DecimalFormat;
 
 public class SummaryActivity extends AppCompatActivity {
 
+    /**********
+     * Coder:  Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * OnCreate method to inflate the view.
+     * It adds the back button to the action bar.
+     * @param savedInstanceState
+     **********/
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +50,13 @@ public class SummaryActivity extends AppCompatActivity {
         getSupportActionBar().setIcon(R.mipmap.ic_launcher);
         populateView();
     }
+
+    /**********
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * Helper method to populate the textview with the data for the fields:
+     *  date, start time, end time, number of steps and distance travelled
+     **********/
 
     private void populateView() {
         Intent i = getIntent();
@@ -36,6 +72,13 @@ public class SummaryActivity extends AppCompatActivity {
         ((TextView) findViewById(R.id.summaryMiles)).setText(String.format("Distance: %s %s", new DecimalFormat("0.##").format(dataObj.getDistance(userData.getMetric(), userData.getInches_per_step())), userData.getMetricUnit()));
     }
 
+    /**********
+     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     *
+     * Event handler called when the back button is pressed
+     * It passes the control back to the activity that invoked
+     * this activity
+     **********/
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         switch (item.getItemId()) {
