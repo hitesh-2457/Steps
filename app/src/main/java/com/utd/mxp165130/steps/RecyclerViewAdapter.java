@@ -20,12 +20,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
         public HistoryViewHolder(View view) {
             super(view);
-            StepCounterDate = (TextView) view.findViewById(R.id.txtHistoryDate);
-            StarTime = (TextView) view.findViewById(R.id.txtHistoryStartTime);
-            EndTime = (TextView) view.findViewById(R.id.txtHistoryStopTime);
-            noOfSteps = (TextView) view.findViewById(R.id.txtHistoryNoOfSteps);
-            Distance = (TextView) view.findViewById(R.id.txtHistoryDistance);
-
+            StepCounterDate = view.findViewById(R.id.txtHistoryDate);
+            StarTime = view.findViewById(R.id.txtHistoryStartTime);
+            EndTime = view.findViewById(R.id.txtHistoryStopTime);
+            noOfSteps = view.findViewById(R.id.txtHistoryNoOfSteps);
+            Distance = view.findViewById(R.id.txtHistoryDistance);
         }
 
         @Override
@@ -50,17 +49,11 @@ public class RecyclerViewAdapter extends RecyclerView.Adapter<RecyclerViewAdapte
 
     @Override
     public void onBindViewHolder(HistoryViewHolder holder, int position) {
-
-//        holder.StepCounterDate.setText("DATE");
-//        holder.StarTime.setText("Start Time");
-//        holder.EndTime.setText("End Time");
-//        holder.noOfSteps.setText("Steps");
         StepCounterInstance instance = items.get(position);
-        // holder.Distance.setText("Distance");
-        holder.StepCounterDate.setText("Date: " + instance.ConvertDateToDateString(instance.getStepCounterInstanceDate(), userAccount.getDateFormat()));
-        holder.StarTime.setText("Start Time: " + instance.ConvertDateToTimeString(instance.getStartTime(), userAccount.getDateFormat()));
-        holder.EndTime.setText("End Time: " + instance.ConvertDateToTimeString(instance.getEndTime(), userAccount.getDateFormat()));
-        holder.noOfSteps.setText("Number of Steps: " + String.valueOf(instance.getNoOfSteps()));
+        holder.StepCounterDate.setText(String.format("Date: %s", instance.ConvertDateToDateString(instance.getStepCounterInstanceDate(), userAccount.getDateFormat())));
+        holder.StarTime.setText(String.format("Start Time: %s", instance.ConvertDateToTimeString(instance.getStartTime())));
+        holder.EndTime.setText(String.format("End Time: %s", instance.ConvertDateToTimeString(instance.getEndTime())));
+        holder.noOfSteps.setText(String.format("Number of Steps: %s", String.valueOf(instance.getNoOfSteps())));
         holder.Distance.setText(String.format("Distance Travelled: %s %s", String.valueOf(new DecimalFormat("0.##").format(instance.getDistance(userAccount.getMetric(), userAccount.getInches_per_step()))), userAccount.getMetricUnit()));
     }
 

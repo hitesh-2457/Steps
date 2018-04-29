@@ -6,7 +6,6 @@ import android.content.Context;
 import android.os.Environment;
 import android.os.Parcel;
 import android.os.Parcelable;
-import android.provider.ContactsContract;
 import android.util.Log;
 
 import java.io.BufferedReader;
@@ -14,10 +13,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.OutputStreamWriter;
-import java.io.Serializable;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,11 +28,14 @@ import java.util.stream.Stream;
 @SuppressLint("ParcelCreator")
 public class DataProcessing extends ArrayList<StepCounterInstance> implements Parcelable {
 
+    private final double INCHES_TO_MILES = 63360;
+    private final double INCHES_TO_KILOMETER = 39370.1;
+
     private static final String TAG = "DataProcessing";
     private final ArrayList<StepCounterInstance> stepCounterData;
     private final UserAccount userData;
-    private final String STEP_COUNTER_DATA_FILENAME = Environment.getExternalStorageDirectory() + "/" + "StepCounterData.txt";
-    private final String User_DATA_FILENAME = Environment.getExternalStorageDirectory() + "/" + "UserData.txt";
+    private final String STEP_COUNTER_DATA_FILENAME = Environment.getExternalStorageDirectory() + "/StepCounterData.txt";
+    private final String User_DATA_FILENAME = Environment.getExternalStorageDirectory() + "/UserData.txt";
 
     /**
      * Method to get contact details from the local data store
@@ -45,7 +43,7 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
      * @return
      */
 
-    public DataProcessing(){
+    public DataProcessing() {
         stepCounterData = new ArrayList<>();
         userData = new UserAccount();
     }
@@ -64,21 +62,21 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
         try {
 //            if (stepCounterDataStrings.length == 4) {
 
-                object.setStepCounterInstanceDate(stepCounterDataStrings[0]);
-                object.setStartTime(stepCounterDataStrings[1]);
-                object.setEndTime(stepCounterDataStrings[2]);
-                object.setNoOfSteps(stepCounterDataStrings[3]);
+            object.setStepCounterInstanceDate(stepCounterDataStrings[0]);
+            object.setStartTime(stepCounterDataStrings[1]);
+            object.setEndTime(stepCounterDataStrings[2]);
+            object.setNoOfSteps(stepCounterDataStrings[3]);
 //            }
         } catch (ParseException e) {
             //do not add the instance to the list. Corrupt instance.
         }
-        Log.i(TAG, "readFromStepCounterDataFile: "+object.toString());
+        Log.i(TAG, "readFromStepCounterDataFile: " + object.toString());
         return object;
     }
 
     public void setStepCounterData(StepCounterInstance instance) {
-            stepCounterData.add(instance);
-        Log.i(TAG, "Size: "+stepCounterData.size());
+        stepCounterData.add(instance);
+        Log.i(TAG, "Size: " + stepCounterData.size());
     }
 
     public void setStepCounterData(String[] stepCounterDataStrings) {
@@ -91,21 +89,6 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
     public void readFromStepCounterDataFile(Context context) {
 
         try {
-//            File file = new File(STEP_COUNTER_DATA_FILENAME);
-//            if (!file.exists()) {
-//                file.createNewFile();
-//                return;
-//            }
-//            InputStream inputStream = context.openFileInput(STEP_COUNTER_DATA_FILENAME);
-//
-//
-//            if (inputStream != null) {
-//                BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream));
-//                String line;
-//                while ((line = bufferedReader.readLine()) != null) {
-//                    this.setStepCounterData(line.split("\t"));
-//
-//                }
             File file = new File(STEP_COUNTER_DATA_FILENAME);
             boolean fileCreated = file.createNewFile();
             if (!fileCreated) {
@@ -114,26 +97,19 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
                 String line;
                 while ((line = bufferedReader.readLine()) != null) {
                     this.setStepCounterData(line.split("\t"));
-                    Log.i(TAG, "readFromStepCounterDataFile: "+line);
+                    Log.i(TAG, "readFromStepCounterDataFile: " + line);
                 }
                 bufferedReader.close();
                 fileReader.close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
-
     }
 
 
     public void writeToStepCounterDataFile(Context context) {
         try {
-//            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(STEP_COUNTER_DATA_FILENAME, Context.MODE_PRIVATE));
-//            for (StepCounterInstance instance : stepCounterData) {
-//                outputStreamWriter.write(instance.toString());
-//            }
-//            outputStreamWriter.close();
             File file = new File(STEP_COUNTER_DATA_FILENAME);
             file.createNewFile();
             FileWriter fileWriter = new FileWriter(file);
@@ -147,15 +123,10 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
         } catch (IOException e) {
             e.printStackTrace();
         }
-
-
-
     }
 
 
     // File processing for the USER data
-
-
     public UserAccount getUserData() {
         return userData;
     }
@@ -167,7 +138,7 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
             userData.setGender(userDataStrings[2]);
             userData.setAge(userDataStrings[3]);
             userData.setInches_per_step(userDataStrings[4]);
-            if (userDataStrings[5].equals("Metric System")||userDataStrings[5].equals("1")) {
+            if (userDataStrings[5].equals("Metric System") || userDataStrings[5].equals("1")) {
                 userData.setMetric("1");
             } else {
                 userData.setMetric("2");
@@ -177,8 +148,6 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
     }
 
     public void readFromUserAccountDataFile(Context context) {
-
-
         try {
             File file = new File(User_DATA_FILENAME);
             boolean fileCreated = file.createNewFile();
@@ -187,13 +156,12 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
                 BufferedReader bufferedReader = new BufferedReader(fileReader);
                 String line = bufferedReader.readLine();
                 this.setUserData(line.split("\t"));
-                Log.i(TAG, "readFromStepCounterDataFile: "+line);
+                Log.i(TAG, "readFromStepCounterDataFile: " + line);
 
                 bufferedReader.close();
                 fileReader.close();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -201,9 +169,6 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
 
     public void writeToUserAccountDataFile(Context context) {
         try {
-//            OutputStreamWriter outputStreamWriter = new OutputStreamWriter(context.openFileOutput(User_DATA_FILENAME, Context.MODE_PRIVATE));
-//            outputStreamWriter.write(userData.toString());
-//            outputStreamWriter.close();
             File file = new File(User_DATA_FILENAME);
             file.createNewFile();
             FileWriter fileWriter = new FileWriter(file);
@@ -218,10 +183,20 @@ public class DataProcessing extends ArrayList<StepCounterInstance> implements Pa
 
     }
 
-    public String ConvertDateToString(Date date, String pattern){
-        //String pattern1 = "dd-MM-yyyy HH:mm:ss";
-        DateFormat format= new SimpleDateFormat(pattern);
+    public String ConvertDateToString(Date date, String pattern) {
+        DateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
+    }
+
+    public double getDistance(int unit, double noOfInchesPerStep, int noOfSteps) {
+        //1 = miles
+        if (unit == 1) {
+            return (noOfSteps * noOfInchesPerStep) / INCHES_TO_MILES;
+        }
+        //inches to kilometer
+        else {
+            return (noOfSteps * noOfInchesPerStep) / INCHES_TO_KILOMETER;
+        }
     }
 
     @Override

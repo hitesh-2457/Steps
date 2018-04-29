@@ -11,20 +11,20 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 @SuppressLint("ParcelCreator")
-public class StepCounterInstance implements Parcelable, Comparable<StepCounterInstance>{
+public class StepCounterInstance implements Parcelable, Comparable<StepCounterInstance> {
 
     private Date stepCounterInstanceDate;
     private Date startTime;
     private Date endTime;
     private int noOfSteps;
-    private String Datepattern;
     private final double INCHES_TO_MILES = 63360;
     private final double INCHES_TO_KILOMETER = 39370.1;
 
-    StepCounterInstance(){
+    StepCounterInstance() {
 
     }
-    StepCounterInstance(Date date, Date startTime, Date endTime, int noOfSteps){
+
+    StepCounterInstance(Date date, Date startTime, Date endTime, int noOfSteps) {
         this.stepCounterInstanceDate = date;
         this.startTime = startTime;
         this.endTime = endTime;
@@ -55,47 +55,34 @@ public class StepCounterInstance implements Parcelable, Comparable<StepCounterIn
         this.endTime = ConvertStringToDate(endTime);
     }
 
-//    public void setStepCounterInstanceDate(Date date)  {
-//        this.stepCounterInstanceDate = date;
-//    }
-//
-//    public void setStartTime(Date startTime)  {
-//        this.startTime = startTime;
-//
-//    }
-//
-//    public void setEndTime(Date endTime)  {
-//        this.endTime = endTime;
-//    }
-
-    public Date getStepCounterInstanceDate(){
+    public Date getStepCounterInstanceDate() {
         return this.stepCounterInstanceDate;
     }
 
-    public void setNoOfSteps(String steps){
+    public void setNoOfSteps(String steps) {
         this.noOfSteps = Integer.parseInt(steps);
     }
 
-    public Date getStartTime(){
+    public Date getStartTime() {
         return this.startTime;
     }
 
-    public Date getEndTime(){
+    public Date getEndTime() {
         return this.endTime;
     }
 
-    public int getNoOfSteps(){
+    public int getNoOfSteps() {
         return this.noOfSteps;
     }
 
-    public double getDistance(int unit, double noOfInchesPerStep){
+    public double getDistance(int unit, double noOfInchesPerStep) {
         //1 = miles
-        if(unit ==1){
-            return (this.noOfSteps*noOfInchesPerStep)/INCHES_TO_MILES;
+        if (unit == 1) {
+            return (this.noOfSteps * noOfInchesPerStep) / INCHES_TO_MILES;
         }
         //inches to kilometer
         else {
-            return (this.noOfSteps*noOfInchesPerStep)/INCHES_TO_KILOMETER;
+            return (this.noOfSteps * noOfInchesPerStep) / INCHES_TO_KILOMETER;
         }
     }
 
@@ -103,33 +90,30 @@ public class StepCounterInstance implements Parcelable, Comparable<StepCounterIn
     @Override
     public String toString() {
         String pattern = "dd-MM-yyyy HH:mm:ss";
-        return ConvertDateToString(this.stepCounterInstanceDate,pattern) + "\t" + ConvertDateToString(this.startTime,pattern)
-                + "\t" + ConvertDateToString(this.endTime,pattern) + "\t" + this.noOfSteps;
+        return ConvertDateToString(this.stepCounterInstanceDate, pattern) + "\t" + ConvertDateToString(this.startTime, pattern)
+                + "\t" + ConvertDateToString(this.endTime, pattern) + "\t" + this.noOfSteps;
     }
 
 
     private Date ConvertStringToDate(String dateString) throws ParseException {
-        DateFormat format= new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+        DateFormat format = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
         return format.parse(dateString);
     }
 
-    public String ConvertDateToString(Date date, String pattern){
-        //String pattern1 = "dd-MM-yyyy HH:mm:ss";
-        DateFormat format= new SimpleDateFormat(pattern);
+    public String ConvertDateToString(Date date, String pattern) {
+        DateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
-    public String ConvertDateToDateString(Date date,String pattern){
+    public String ConvertDateToDateString(Date date, String pattern) {
         String datepattern = pattern.split(" ")[0];
-        //String pattern1 = "dd-MM-yyyy";
-        DateFormat format= new SimpleDateFormat(datepattern);
+        DateFormat format = new SimpleDateFormat(datepattern);
         return format.format(date);
     }
 
-    public String ConvertDateToTimeString(Date date,String pattern){
-        //String datepattern = pattern.split(" ")[1];
-        String pattern1 = "HH:mm:ss";
-        DateFormat format= new SimpleDateFormat(pattern1);
+    public String ConvertDateToTimeString(Date date) {
+        String pattern = "HH:mm:ss";
+        DateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
 
@@ -140,9 +124,9 @@ public class StepCounterInstance implements Parcelable, Comparable<StepCounterIn
 
     @Override
     public void writeToParcel(Parcel dest, int flags) {
-        dest.writeString(this.ConvertDateToString(this.stepCounterInstanceDate,"dd-MM-yyyy HH:mm:ss"));
-        dest.writeString(this.ConvertDateToString(this.startTime,"dd-MM-yyyy HH:mm:ss"));
-        dest.writeString(this.ConvertDateToString(this.endTime,"dd-MM-yyyy HH:mm:ss"));
+        dest.writeString(this.ConvertDateToString(this.stepCounterInstanceDate, "dd-MM-yyyy HH:mm:ss"));
+        dest.writeString(this.ConvertDateToString(this.startTime, "dd-MM-yyyy HH:mm:ss"));
+        dest.writeString(this.ConvertDateToString(this.endTime, "dd-MM-yyyy HH:mm:ss"));
         dest.writeInt(this.noOfSteps);
     }
 
@@ -159,13 +143,11 @@ public class StepCounterInstance implements Parcelable, Comparable<StepCounterIn
 
     @Override
     public int compareTo(@NonNull StepCounterInstance o) {
-        if(this.stepCounterInstanceDate.after(o.stepCounterInstanceDate)) {
+        if (this.stepCounterInstanceDate.after(o.stepCounterInstanceDate)) {
             return -1;
-        }
-        else if(this.stepCounterInstanceDate.before(o.stepCounterInstanceDate)) {
+        } else if (this.stepCounterInstanceDate.before(o.stepCounterInstanceDate)) {
             return 1;
-        }
-        else{
+        } else {
             return 0;
         }
     }
