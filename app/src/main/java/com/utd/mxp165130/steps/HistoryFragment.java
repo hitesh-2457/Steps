@@ -45,7 +45,7 @@ public class HistoryFragment extends Fragment {
     private UserAccount user;
 
     /**************************
-     * Coder: Hitesh Gupta Tumsi Ramesh (hxg170230)
+     * Coder: Meghana Pochiraju (mxp165130)
      *
      * Bundles the data to be passed to the Fragement
      * and returns the fragment back to the invoking function.
